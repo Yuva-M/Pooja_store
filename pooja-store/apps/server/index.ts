@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { serveStatic } from 'hono/bun'
+import { handle } from 'hono/vercel'
 
 const app = new Hono()
 
@@ -60,6 +61,11 @@ app.post('/api/checkout', async (c) => {
     console.log('Checkout received:', body)
     return c.json({ message: 'Order placed successfully!', orderId: Math.random().toString(36).substr(2, 9) })
 })
+
+export const GET = handle(app)
+export const POST = handle(app)
+export const PUT = handle(app)
+export const DELETE = handle(app)
 
 export default {
     port: 3001,

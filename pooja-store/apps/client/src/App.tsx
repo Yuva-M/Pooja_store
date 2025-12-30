@@ -21,7 +21,8 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/products')
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    fetch(`${apiUrl}/api/products`)
       .then(res => res.json())
       .then(data => {
         setProducts(data)
@@ -64,7 +65,8 @@ const App: React.FC = () => {
 
   const handleCheckout = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/checkout', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${apiUrl}/api/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: cart, total })
