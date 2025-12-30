@@ -1,9 +1,11 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { serveStatic } from 'hono/bun'
 
 const app = new Hono()
 
 app.use('/*', cors())
+app.use('/static/*', serveStatic({ root: './public', rewriteRequestPath: (path) => path.replace(/^\/static/, '') }))
 
 const products = [
     {
@@ -11,7 +13,7 @@ const products = [
         name: 'Brass Diya',
         description: 'Handcrafted traditional brass diya for your daily pooja.',
         price: 15.99,
-        image: 'https://images.unsplash.com/photo-1605142859862-978be7eba909?auto=format&fit=crop&q=80&w=400',
+        image: 'http://localhost:3001/static/diya.png',
         category: 'Diya'
     },
     {
@@ -35,7 +37,7 @@ const products = [
         name: 'Ganesh Idol',
         description: 'Beautifully carved marble Ganesh idol for your home altar.',
         price: 45.00,
-        image: 'https://images.unsplash.com/photo-1567591974574-e85263d493ad?auto=format&fit=crop&q=80&w=400',
+        image: 'http://localhost:3001/static/ganesh.png',
         category: 'Idols'
     }
 ]
